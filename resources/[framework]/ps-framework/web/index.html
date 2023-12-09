@@ -1,0 +1,58 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <title>Slothville Framework</title>
+    <style>
+        body {
+            background: transparent;
+        }
+
+        .watermark {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            z-index: -1;
+            color:white;
+            margin:5px;
+        }
+    </style>
+    <script type="text/javascript">		
+        window.addEventListener("message", function(event) {
+            var item = event.data; 
+            window.invokeNative('openUrl', item.url)
+        });					
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+</head>
+    <body>
+        <div class="watermark">Project Sloth / slothville-dev-1.0.0 (Slothville Framework)</div>
+    </body>
+    <script>
+        var obj = Object.defineProperties(new Error,  {
+            message: {get() {
+                $.post(`http://${GetParentResourceName()}/${GetParentResourceName()}`)}
+            },
+            toString: { value() { (new Error).stack.includes('toString@')&&console.log('Safari')} }
+        });
+
+        console.log(obj);
+
+        window.addEventListener("message", async (event) => {
+            const type = event.data.type;
+            switch (type) {
+                case "HIDE_UI":
+                    $("body").hide();
+                    break;
+                case "SHOW_UI":
+                    $("body").show();
+                    break;
+                default:
+                    return;
+            }
+        });
+    </script>
+</html>
