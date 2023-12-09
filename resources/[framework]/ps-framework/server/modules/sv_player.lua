@@ -215,7 +215,7 @@ InternalPlayer.SelectCharacter = function(src, cid)
     ---@cast src number
 
     InternalPlayer.UpdateStateBags(src)
-    TriggerClientEvent("multichar:event", src, dbdata, false) -- not coded but will pass needed values for startup
+    TriggerClientEvent("ps-multi:client:CharacterSelected", src, dbdata, false) -- not coded but will pass needed values for startup
     TriggerClientEvent("ps-framework:PlayerLoaded", src)
     TriggerEvent("ps-framework:PlayerLoaded", src, InternalPlayers[src])
 end
@@ -253,9 +253,9 @@ InternalPlayer.CreateCharacter = function(src, info, slot)
     PlayerInfo.position = InternalConfig.DefaultPosition
 
     ---@cast src number
-    TriggerClientEvent("multichar:charselected", src, PlayerInfo, true) -- not coded but will pass needed values for startup
+    TriggerClientEvent("ps-multi:client:CharacterSelected", src, PlayerInfo, true) -- not coded but will pass needed values for startup
 
-    TriggerClientEvent("clothing:openMenu", src) -- Open Clothing Menu
+    TriggerClientEvent("clothing:newOpenMenu", src) -- Open Clothing Menu for new Player
 end
 
 InternalPlayer.DeleteCharacter = function(src, cid)
