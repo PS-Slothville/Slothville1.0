@@ -1,6 +1,7 @@
 Framework               = {}
 Framework.Config        = InternalConfig
 Framework.Shared        = InternalShared
+Framework.Database      = InternalDatabase
 Framework.Permissions   = InternalPermissions
 Framework.Functions     = InternalFunctions
 Framework.Debug         = InternalDebug

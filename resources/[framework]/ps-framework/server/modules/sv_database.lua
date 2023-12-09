@@ -1,4 +1,5 @@
-Framework.Database.Tables = {
+InternalDatabase = {}
+InternalDatabase.Tables = {
     {
         name = "characters",
         query = [[
@@ -80,7 +81,7 @@ Framework.Database.Tables = {
 
 CreateThread(function()
     MySQL.ready(function()
-        for _,table in pairs(Framework.Database.Tables) do
+        for _,table in pairs(InternalDatabase.Tables) do
             MySQL.Async.execute(table.query, {}, function()
                 print(("Slothville: Database table %s initialized"):format(table.name))
             end)
