@@ -6,6 +6,7 @@ Framework.Functions     = InternalFunctions
 Framework.Debug         = InternalDebug
 Framework.Player        = InternalPlayer
 Framework.Players       = InternalPlayers
+Framework.Callback      = InternalCallback
     
 exports('LoadObject', function()
     return Framework

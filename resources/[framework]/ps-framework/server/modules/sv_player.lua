@@ -68,7 +68,7 @@ CreatePlayer = function(src, dbdata) -- no work in InternalPlayers should be fix
     self.AddMoney = function(type, amount)
         if self.money[type] then
             self.money[type] = self.money[type] + tonumber(amount)
-            TriggerClientEvent("hud:client:OnMoneyChange", self.source, type, amount, false)
+            TriggerClientEvent("hud:client:OnMoneyChange", self.source, type, amount, false) -- hud money change
             if type == "cash" then
                 TriggerEvent("ps-framework:OnCashChanged", self.source, self.money[type]) -- for inv
             end
@@ -79,7 +79,7 @@ CreatePlayer = function(src, dbdata) -- no work in InternalPlayers should be fix
     self.RemoveMoney = function(type, amount)
         if self.money[type] then
             self.money[type] = self.money[type] - tonumber(amount)
-            TriggerClientEvent("hud:client:OnMoneyChange", self.source, type, amount, true)
+            TriggerClientEvent("hud:client:OnMoneyChange", self.source, type, amount, true) -- hud money change
             if type == "cash" then
                 TriggerEvent("ps-framework:OnCashChanged", self.source, self.money[type]) -- for inv
             end
