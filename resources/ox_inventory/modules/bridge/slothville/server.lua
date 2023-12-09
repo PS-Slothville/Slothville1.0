@@ -36,7 +36,7 @@ end
 
 ---@diagnostic disable-next-line: duplicate-set-field
 function server.isPlayerBoss(playerId, group, grade)
-	local groupData = GlobalState.Shared_Jobs[group]
+	local groupData = GlobalState.SharedJobs[group]
 
 	return groupData and exports['ps-framework']:HasJobPermission(group, grade, "generic:bossmenu")
 end
@@ -67,7 +67,7 @@ SetTimeout(2000, function()
     for _, id in pairs(GetPlayers()) do
 		local character = Framework.GetPlayer(id)
 		if character then
-			character.identifier = character.citizenid
+			character.identifier = character.cid
 			character.name = character.name
 			character.dateofbirth = character.charinfo.age
 			server.setPlayerInventory(character)
@@ -77,7 +77,7 @@ SetTimeout(2000, function()
 end)
 
 local function setupPlayer(src, Player)
-	Player.identifier = Player.citizenid
+	Player.identifier = Player.cid
 	Player.name = Player.fullname
 	Player.dateofbirth = Player.age
 	Player.source = src
