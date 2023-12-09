@@ -244,19 +244,10 @@ AddEventHandler('gameEventTriggered', function(event, data)
             print(attacker, IsEntityAPed(deathSource), IsPedAPlayer(deathSource), deathSource ~= PlayerPedId()) 
 
             local isViolent = IsViolent(weapon)
-            local isMinor = IsMinor(weapon) --or IsPoisoned()
+            local isMinor = IsMinor(weapon)
 
             local KeepItems = true
-            --[[
-                 allowLocalEMS = not isViolent
 
-                if (IsEntityAPed(deathSource) and IsPedAPlayer(deathSource) and deathSource ~= player) or isViolent then
-                    TriggerEvent('wv-hospital:sendPing')
-                    allowLocalEMS = false
-                end
-
-                allowLocalEMS = allowLocalEMS or isCop()
-            ]]
             SetEntityInvincible(cache.ped, true)
             SetEntityHealth(cache.ped, GetEntityMaxHealth(cache.ped))
             if not isDead then 
