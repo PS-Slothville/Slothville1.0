@@ -1,10 +1,11 @@
-Framework = {}
+Framework               = {}
 Framework.Config        = InternalConfig
 Framework.Shared        = InternalShared
 Framework.Permissions   = InternalPermissions
 Framework.Functions     = InternalFunctions
 Framework.Debug         = InternalDebug
 Framework.Player        = InternalPlayer
+Framework.Players       = InternalPlayers
     
 exports('LoadObject', function()
     return Framework

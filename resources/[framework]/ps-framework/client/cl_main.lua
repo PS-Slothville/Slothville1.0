@@ -1,8 +1,9 @@
-Framework = {}
-Framework.Config    = InternalConfig
-Framework.Shared    = InternalShared
+Framework               = {}
+Framework.Config        = InternalConfig
+Framework.Shared        = InternalShared
+Framework.Debug         = InternalDebug
 Framework.Functions     = InternalFunctions
-Framework.Callback  = InternalCallback
+Framework.Callback      = InternalCallback
 
 -- This is not recommended for use
 exports("LoadObject", function()

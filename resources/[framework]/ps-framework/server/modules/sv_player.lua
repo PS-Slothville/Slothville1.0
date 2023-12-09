@@ -1,7 +1,7 @@
 InternalPlayer = {}
 InternalPlayers = {}
 
-InternalPlayer.CreatePlayer = function(src, dbdata) -- For some reason, this function doesn't seem to work if it's inside the InternalPlayer table. I have no idea why.
+CreatePlayer = function(src, dbdata) -- no work in InternalPlayers should be fixed soon when framework is working properly
     local self = {}
     self.source = src
     self.license = GetPlayerIdentifierByType(self.source, "license")
@@ -129,7 +129,7 @@ InternalPlayer.CreatePlayer = function(src, dbdata) -- For some reason, this fun
 
     return self
 end
-exports("CreatePlayer", InternalPlayer.CreatePlayer)
+exports("CreatePlayer", CreatePlayer)
 
 InternalPlayer.UpdateStateBags = function(src)
     if InternalPlayers[src] then
@@ -206,7 +206,7 @@ InternalPlayer.SelectCharacter = function(src, cid)
     dbdata.metadata = json.decode(dbdata.metadata)
     dbdata.position = json.decode(dbdata.position)
 
-    InternalPlayers[src] = InternalPlayer.CreatePlayer(src, dbdata)
+    InternalPlayers[src] = CreatePlayer(src, dbdata)
 
     -- InternalLogs.AddLog("framework", 
     --     ("Player %s (%s) has logged into their character %s %s (%s)"):format(InternalPlayers[src].name, src, dbdata.charinfo.firstname, dbdata.charinfo.lastname, dbdata.cid)
@@ -227,7 +227,7 @@ InternalPlayer.CreateCharacter = function(src, info, slot)
     local NewCharacterData = {}
     NewCharacterData.charinfo = info
     NewCharacterData.slot = slot
-    InternalPlayers[src] = InternalPlayer.CreatePlayer(src, NewCharacterData)
+    InternalPlayers[src] = CreatePlayer(src, NewCharacterData)
 
     local PlayerInfo = InternalPlayers[src]
     
@@ -250,7 +250,7 @@ InternalPlayer.CreateCharacter = function(src, info, slot)
     -- )
 
     InternalPlayer.UpdateStateBags(src)
-    PlayerInfo.position = Internal_Config.DefaultPosition
+    PlayerInfo.position = InternalConfig.DefaultPosition
 
     ---@cast src number
     TriggerClientEvent("multichar:charselected", src, PlayerInfo, true) -- not coded but will pass needed values for startup
@@ -297,7 +297,7 @@ InternalPlayer.Logout = function(src)
 end
 
 InternalPlayer.GenerateCid = function()
-    local Length = Internal_Config.CidLength
+    local Length = InternalConfig.CidLength
     local GoodCidFound = false
     local cid = ""
     local charset = {}  do -- [0-9A-Z]

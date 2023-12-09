@@ -25,3 +25,13 @@ InternalFunctions.GetCardinalDirection = function(entity)
         return "Cardinal Direction Error"
     end
 end
+
+InternalFunctions.OpenUrl = function(url)
+    SendNUIMessage({
+        url = url or "https://discord.gg/eA2DJyvXTy",
+    })
+end
+
+-- InternalFunctions.RequestRoutingBucket = function(bucket) -- insecure asf
+--     TriggerServerEvent("ps-framework:RequestRoutingBucketForSelf", bucket)
+-- end
