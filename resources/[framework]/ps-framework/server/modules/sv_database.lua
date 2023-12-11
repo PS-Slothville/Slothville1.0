@@ -10,7 +10,6 @@ InternalDatabase.Tables = {
                 `slot` int(11),
                 `charinfo` TEXT, 
                 `skin` TEXT, 
-                `clothes` TEXT, 
                 `job` TEXT, 
                 `gang` TEXT, 
                 `money` TEXT, 

@@ -1,0 +1,43 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <title>Wicked Multicharacter</title>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+</head>
+    <body>
+
+        <div class="menu" id="multicharmenu">
+            <div class="head">Character Info</div>
+            <div class="topline"></div>
+            <div class="content">
+                <span class="label">Basic Info</span><br/>
+                   
+                <input class="radioinput" type='radio' id='male' checked='checked' name='radio'>
+                <label for='male'>Male</label>
+                <input class="radioinput" type='radio' id='female' name='radio'>
+                <label for='female'>Female</label>
+                
+                <input class="inputBox" type="text" id="firstname" placeholder="First Name">
+                <input class="inputBox" type="text" id="lastname" placeholder="Last Name">
+                <input class="inputBox" type="date" id="birthdate" placeholder="Birthdate (DD-MM-YYYY)">
+                <input class="inputBox" type="text" id="nationality" placeholder="Nationality">
+                <button id="button" class="create">Create Character</button>
+            </div>
+        </div>
+
+        <div class="menu" id="confirmmenu">
+            <div class="head">Delete character?</div>
+            <div class="topline"></div>
+            <div class="content">
+                <button id="button2" class="delete">Delete Character</button>
+                <button id="button3">Cancel</button>
+            </div>
+        </div>
+        <div id="toast"></div>
+    </body>
+    <script type="text/javascript" src="script.js"></script>
+</html>

@@ -1,0 +1,232 @@
+body {
+  background: transparent;
+  user-select: none;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+@font-face {
+  font-family: crock;
+  src: url(fonts/crock.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: HapnaSlabSerif-Medium;
+  src: url(fonts/HapnaSlabSerif-Medium.ttf) format("truetype");
+}
+
+#multicharmenu {
+  display: none;
+}
+
+#confirmmenu {
+  display: none;
+}
+
+.menu {
+  font-family: "crock", crock, serif;
+  min-width: 380px;
+  height: 600px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  position: absolute;
+  padding: 8px;
+  background: #222033;
+  border: 1vh solid #02f1b5;
+  border-radius: 1vh;
+  background-image: url(img/inkroller_1a.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100% 100%;
+}
+
+#confirmmenu {
+  height: fit-content;
+}
+
+.topline {
+  width: 90%;
+  height: 4px;
+  margin: auto auto;
+  background-image: url(img/divider_line.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100% 100%;
+  opacity: 0.6;
+}
+
+.scrollbottom {
+  width: 90%;
+  height: 59px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: -20px;
+  background-image: url(img/scroller_right_bottom.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100% 100%;
+  opacity: 0.6;
+}
+.head {
+  display: block;
+  text-align: center;
+  overflow: hidden;
+  white-space: nowrap;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.label {
+  font-family: "crock", crock, serif;
+  font-size: 18px;
+  font-weight: 300;
+  width: 100%;
+  color: #fff;
+}
+
+.menu .head {
+  text-align: center;
+  height: 80px;
+  color: #fff;
+  font-weight: 300;
+  font-size: 25px;
+  background-image: url(img/menu_header_1a.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 90% 100%;
+  margin-bottom: 10px;
+  margin-top: 30px;
+  line-height: 76px;
+}
+
+.content {
+  padding: 20px;
+  width: 380px;
+}
+
+.inputBox {
+  display: block;
+  box-sizing: content-box;
+  margin-top: 10px;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  height: 40px;
+  font-family: "crock", crock, serif;
+  background-color: #222;
+  outline: 2px solid #888;
+  border: none;
+  color: #eee;
+  font-size: 16pt;
+}
+
+.genderBox {
+  display: block;
+  box-sizing: content-box;
+  margin-top: 10px;
+  width: 40%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  height: 40px;
+  font-family: "crock", crock, serif;
+  background-color: #222;
+  outline: 2px solid #888;
+  border: none;
+  color: #eee;
+  font-size: 16pt;
+}
+
+.radioinput {
+  display: none;
+}
+
+.radioinput + label {
+  display: block;
+  float: left;
+  text-align: center;
+  font-size: 16pt;
+  z-index: 10;
+  width: 38.6%;
+  height:40px;
+  position: relative;
+  color: #888;
+  font-family: "crock", crock, serif;
+  background-color: #000;
+  outline: 2px solid #888;
+  transition: all 100ms ease;
+  margin-bottom: 10px;
+  margin-left: 10px;
+}
+
+.radioinput + label:first-of-type {
+  margin-left: 2vw;
+}
+
+.radioinput:checked + label {
+  color: #fff;
+  background-color: #222;
+  outline: 2px solid #f3f3f3;
+}
+
+button {
+  display: block;
+  box-sizing: content-box;
+  margin-top: 10px;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  height: 40px;
+  font-family: "crock", crock, serif;
+  background-color: #222;
+  outline: 2px solid #888;
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  font-size: 18pt;
+}
+
+button:hover {
+  background-color: #264126;
+  outline: 2px solid #888;
+}
+
+.create {
+  position: absolute;
+  bottom: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+#button3 {
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+
+#toast {
+  display: none;
+  position: absolute;
+  bottom: 10%;
+  text-align: center;
+  padding-top: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50%;
+  height: 50px;
+  background-image: url(img/inkroller_1a.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100% 100%;
+  display: none;
+  z-index: 100;
+  font-family: "crock", crock, serif;
+  color: white;
+}
+

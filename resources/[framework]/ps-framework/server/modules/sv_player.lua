@@ -1,7 +1,7 @@
 InternalPlayer = {}
 InternalPlayers = {}
 
-CreatePlayer = function(src, dbdata) -- no work in InternalPlayers should be fixed soon when framework is working properly
+InternalPlayer.CreatePlayer = function(src, dbdata) -- no work in InternalPlayers should be fixed soon when framework is working properly
     local self = {}
     self.source = src
     self.license = GetPlayerIdentifierByType(self.source, "license")
@@ -15,12 +15,13 @@ CreatePlayer = function(src, dbdata) -- no work in InternalPlayers should be fix
     self.charinfo.firstname = self.charinfo.firstname or "John" -- Default name
     self.charinfo.lastname = self.charinfo.lastname or "Doe" -- Default name
     self.charinfo.fullname = ("%s %s"):format(self.charinfo.firstname, self.charinfo.lastname)
-    self.charinfo.age = self.charinfo.age or 18 -- 18 is the default age
+    self.charinfo.birthdate = self.charinfo.birthdate or '0000-00-00'
     self.charinfo.gender = self.charinfo.gender or 1 -- 1 = Male, 0 = Female
-    self.charinfo.height = self.charinfo.height or 178 -- 178cm is the default height
+    self.charinfo.nationality = self.charinfo.nationality
+    self.charinfo.phone = self.charinfo.phone or InternalPlayer.CreatePhoneNumber()
+    self.charinfo.account = self.charinfo.account or InternalPlayer.CreateAccountNumber()
 
     self.skin = dbdata.skin or {}
-    self.clothes = dbdata.clothes or {}
 
     self.job = dbdata.job or {}
     self.job.name = self.job.name or "unemployed" -- Default job
@@ -114,11 +115,6 @@ CreatePlayer = function(src, dbdata) -- no work in InternalPlayers should be fix
         InternalPlayer.UpdateStateBags(self.source)
     end
 
-    self.SetClothesData = function(data)
-        self.clothes = data
-        InternalPlayer.UpdateStateBags(self.source)
-    end
-
     self.Save = function()
         InternalPlayer.Save(self.source)
     end
@@ -129,7 +125,7 @@ CreatePlayer = function(src, dbdata) -- no work in InternalPlayers should be fix
 
     return self
 end
-exports("CreatePlayer", CreatePlayer)
+exports("CreatePlayer", InternalPlayer.CreatePlayer)
 
 InternalPlayer.UpdateStateBags = function(src)
     if InternalPlayers[src] then
@@ -199,14 +195,13 @@ InternalPlayer.SelectCharacter = function(src, cid)
     local dbdata = result
     dbdata.charinfo = json.decode(dbdata.charinfo)
     dbdata.skin = json.decode(dbdata.skin)
-    dbdata.clothes = json.decode(dbdata.clothes)
     dbdata.job = json.decode(dbdata.job)
     dbdata.gang = json.decode(dbdata.gang)
     dbdata.money = json.decode(dbdata.money)
     dbdata.metadata = json.decode(dbdata.metadata)
     dbdata.position = json.decode(dbdata.position)
 
-    InternalPlayers[src] = CreatePlayer(src, dbdata)
+    InternalPlayers[src] = InternalPlayer.CreatePlayer(src, dbdata)
 
     -- InternalLogs.AddLog("framework", 
     --     ("Player %s (%s) has logged into their character %s %s (%s)"):format(InternalPlayers[src].name, src, dbdata.charinfo.firstname, dbdata.charinfo.lastname, dbdata.cid)
@@ -227,17 +222,16 @@ InternalPlayer.CreateCharacter = function(src, info, slot)
     local NewCharacterData = {}
     NewCharacterData.charinfo = info
     NewCharacterData.slot = slot
-    InternalPlayers[src] = CreatePlayer(src, NewCharacterData)
+    InternalPlayers[src] = InternalPlayer.CreatePlayer(src, NewCharacterData)
 
     local PlayerInfo = InternalPlayers[src]
     
-    MySQL.execute('INSERT INTO characters (`license`, `cid`, `slot`, `charinfo`, `skin`, `clothes`, `job`, `gang`, `money`, `metadata`, `position`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', {
+    MySQL.execute('INSERT INTO characters (`license`, `cid`, `slot`, `charinfo`, `skin`, `job`, `gang`, `money`, `metadata`, `position`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', {
         license,
         PlayerInfo.cid,
         slot,
         json.encode(PlayerInfo.charinfo),
         json.encode(PlayerInfo.skin),
-        json.encode(PlayerInfo.clothes),
         json.encode(PlayerInfo.job),
         json.encode(PlayerInfo.gang),
         json.encode(PlayerInfo.money),
@@ -270,10 +264,9 @@ end
 InternalPlayer.Save = function(src)
     if InternalPlayers[src] then
         local PlayerInfo = InternalPlayers[src]
-        MySQL.execute('UPDATE characters SET charinfo = ?, skin = ?, clothes = ?, job = ?, gang = ?, money = ?, metadata = ?, position = ? WHERE license = ? AND cid = ?', {
+        MySQL.execute('UPDATE characters SET charinfo = ?, skin = ?, job = ?, gang = ?, money = ?, metadata = ?, position = ? WHERE license = ? AND cid = ?', {
             json.encode(PlayerInfo.charinfo),
             json.encode(PlayerInfo.skin),
-            json.encode(PlayerInfo.clothes),
             json.encode(PlayerInfo.job),
             json.encode(PlayerInfo.gang),
             json.encode(PlayerInfo.money),
@@ -319,4 +312,32 @@ InternalPlayer.GenerateCid = function()
         end
     end
     return cid
+end
+
+InternalPlayer.CreateAccountNumber = function()
+    local UniqueFound = false
+    local AccountNumber = nil
+    while not UniqueFound do
+        AccountNumber = math.random(1,9) .. math.random(1,9) .. math.random(1,9) .. math.random(1,9) .. math.random(1,9) .. math.random(1,9) .. math.random(1,9) .. math.random(1,9)
+        local query = '%' .. AccountNumber .. '%'
+        local result = MySQL.prepare.await('SELECT COUNT(*) as count FROM characters WHERE charinfo LIKE ?', { query })
+        if result == 0 then
+            UniqueFound = true
+        end
+    end
+    return AccountNumber
+end
+
+InternalPlayer.CreatePhoneNumber = function()
+    local UniqueFound = false
+    local PhoneNumber = nil
+    while not UniqueFound do
+        PhoneNumber = math.random(100,999) .. math.random(1000000,9999999)
+        local query = '%' .. PhoneNumber .. '%'
+        local result = MySQL.prepare.await('SELECT COUNT(*) as count FROM characters WHERE charinfo LIKE ?', { query })
+        if result == 0 then
+            UniqueFound = true
+        end
+    end
+    return PhoneNumber
 end
