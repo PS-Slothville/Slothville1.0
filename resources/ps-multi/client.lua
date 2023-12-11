@@ -66,7 +66,7 @@ CharacterSelected = function()
         Wait(300)
         Camera.DestroyCamera()
         Peds.DestroyPeds()
-        TriggerServerEvent("ps-multi:SelectCharacter", CharacterData[Camera.SelectedChar].citizenid)
+        TriggerServerEvent("ps-multi:SelectCharacter", CharacterData[Camera.SelectedChar].cid)
         Camera.CamActive = false
         Camera.Cam = nil
         Camera.SelectedChar = 1
@@ -99,7 +99,7 @@ RegisterNUICallback("CloseConfirm", function(response)
     end
 
     if response.confirm == true then
-        TriggerServerEvent("ps-multi:DeleteCharacter", CharacterData[Camera.SelectedChar].citizenid)
+        TriggerServerEvent("ps-multi:DeleteCharacter", CharacterData[Camera.SelectedChar].cid)
     else
         Camera.StartCameraThread()
     end
@@ -116,9 +116,9 @@ RegisterNUICallback("CloseNUI", function(response)
         local info = {
             firstname = response.firstname, -- Default name
             lastname = response.lastname, -- Default name
-            birthdate = response.birthdate
+            birthdate = response.birthdate,
             gender = tonumber(response.gender), -- 1 = Male, 0 = Female
-            nationality = response.nationality
+            nationality = response.nationality,
         }
     
         DoScreenFadeOut(250)
@@ -148,6 +148,10 @@ end)
 
 --#endregion
 
+RegisterCommand("fixfade", function()
+    DoScreenFadeIn(500)
+end)
+
 --#region Net Events
 
 RegisterNetEvent("ps-multi:CharacterDeleted", function()
@@ -164,17 +168,19 @@ RegisterNetEvent("ps-multi:CharacterDeleted", function()
 end)
 
 RegisterNetEvent("ps-multi:LoadCharacters", function(chardata)
+    print("test")
     CharacterData = {}
 
     for _,data in ipairs(chardata) do
         if not CharacterData[data.slot] then
             CharacterData[data.slot] = {}
         end
-        CharacterData[data.slot].citizenid = data.citizenid
+        CharacterData[data.slot].cid = data.cid
         CharacterData[data.slot].slot = data.slot
         CharacterData[data.slot].charinfo = json.decode(data.charinfo)
         CharacterData[data.slot].skin = json.decode(data.skin)
     end
+    print("test1")
 
     local PositionsTaken = 0
 
@@ -191,18 +197,24 @@ RegisterNetEvent("ps-multi:LoadCharacters", function(chardata)
             Wait(10)
         end
     end
+    print("test2")
 
     if PositionsTaken < 4 then
+        print("test5")
         for i = 1, 4 do
+            print("test6")
             if not CharacterData[i] then
+                print("test7")
                 -- Unused Slots | Default Ped
                 local ped = Peds.SpawnPed(i)
-                
+                print("aa")
             end
         end
     end
+    print("test3")
 
     Camera.SetUpCamera()
+    print("test4")
 
     Wait(100)
     DoScreenFadeIn(500)

@@ -7,7 +7,7 @@
 ---@field DestroyCamera function
 ---@field StartCameraThread function
 
-DrawText2D = function (text, x,y, width,height scale, r, g, b, a, outline)
+DrawText2D = function (text, x,y, width,height, scale, r, g, b, a, outline)
     SetTextFont(4)
     SetTextProportional(0)
     SetTextScale(scale, scale)

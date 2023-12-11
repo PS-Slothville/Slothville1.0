@@ -8,7 +8,7 @@ InternalPlayer.CreatePlayer = function(src, dbdata) -- no work in InternalPlayer
     self.name = GetPlayerName(self.source)
     self.cid = dbdata.cid or InternalPlayer.GenerateCid()
     self.permissiongroup = InternalPermissions.GetPermissionGroup(self.source)
-    print(self.permission)
+    print("PERMS: "..self.permission, self.permissiongroup)
     self.slot = dbdata.slot or 1 -- Default slot
 
     self.charinfo = dbdata.charinfo or {}
@@ -214,6 +214,7 @@ InternalPlayer.SelectCharacter = function(src, cid)
     TriggerClientEvent("ps-framework:PlayerLoaded", src)
     TriggerEvent("ps-framework:PlayerLoaded", src, InternalPlayers[src])
 end
+exports("SelectCharacter", InternalPlayer.SelectCharacter)
 
 InternalPlayer.CreateCharacter = function(src, info, slot)
     ---@cast src string
@@ -251,6 +252,7 @@ InternalPlayer.CreateCharacter = function(src, info, slot)
 
     TriggerClientEvent("clothing:newOpenMenu", src) -- Open Clothing Menu for new Player
 end
+exports("CreateCharacter", InternalPlayer.CreateCharacter)
 
 InternalPlayer.DeleteCharacter = function(src, cid)
     ---@cast src string
@@ -260,6 +262,7 @@ InternalPlayer.DeleteCharacter = function(src, cid)
     --     ("Player %s (%s) has deleted character ID %s"):format(GetPlayerName(src), src, cid)
     -- )
 end
+exports("DeleteCharacter", InternalPlayer.DeleteCharacter)
 
 InternalPlayer.Save = function(src)
     if InternalPlayers[src] then
@@ -277,6 +280,7 @@ InternalPlayer.Save = function(src)
         })
     end
 end
+exports("Save", InternalPlayer.Save)
 
 InternalPlayer.Logout = function(src)
     if InternalPlayers[src] then
@@ -288,6 +292,7 @@ InternalPlayer.Logout = function(src)
         TriggerClientEvent("ps-framework:UnloadPlayer", src)
     end
 end
+exports("Logout", InternalPlayer.Logout)
 
 InternalPlayer.GenerateCid = function()
     local Length = InternalConfig.CidLength
@@ -313,6 +318,7 @@ InternalPlayer.GenerateCid = function()
     end
     return cid
 end
+exports("GenerateCid", InternalPlayer.GenerateCid)
 
 InternalPlayer.CreateAccountNumber = function()
     local UniqueFound = false
@@ -327,6 +333,7 @@ InternalPlayer.CreateAccountNumber = function()
     end
     return AccountNumber
 end
+exports("CreateAccountNumber", InternalPlayer.CreateAccountNumber)
 
 InternalPlayer.CreatePhoneNumber = function()
     local UniqueFound = false
@@ -341,3 +348,4 @@ InternalPlayer.CreatePhoneNumber = function()
     end
     return PhoneNumber
 end
+exports("CreatePhoneNumber", InternalPlayer.CreatePhoneNumber)

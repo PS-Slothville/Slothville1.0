@@ -5,9 +5,9 @@ RegisterNetEvent("ps-framework:LoadCharacters", function()
     TriggerClientEvent("ps-multi:LoadCharacters", src, characters)
 end)
 
-RegisterNetEvent("ps-multi:SelectCharacter", function(citizenid)
+RegisterNetEvent("ps-multi:SelectCharacter", function(cid)
     local src = source
-    exports['ps-framework']:SelectCharacter(src, citizenid)
+    exports['ps-framework']:SelectCharacter(src, cid)
 end)
 
 RegisterNetEvent("ps-multi:CreateCharacter", function(info, slot)
@@ -21,8 +21,8 @@ RegisterNetEvent("ps-framework:Logout", function()
     exports['ps-framework']:Logout(src)
 end)
 
-RegisterNetEvent("ps-multi:DeleteCharacter", function(citizenid)
+RegisterNetEvent("ps-multi:DeleteCharacter", function(cid)
     local src = source
-    exports['ps-framework']:DeleteCharacter(src, citizenid)
+    exports['ps-framework']:DeleteCharacter(src, cid)
     TriggerClientEvent("ps-multi:CharacterDeleted", src)
 end)

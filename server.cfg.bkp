@@ -27,7 +27,7 @@ sets sv_projectName "Project Sloth 3.0"
 sets sv_projectDesc "maybe this is fake who knows"
 sets locale "en-US"
 load_server_icon myLogo.png
-set mysql_connection_string "mysql://root@localhost/svdev?charset=utf8mb4"
+set mysql_connection_string "mysql://root@localhost/Slothville?charset=utf8mb4"
 
 ## Voice config
 setr voice_useNativeAudio true
@@ -58,7 +58,7 @@ ensure ps-framework
 exec resources.cfg
 
 ## Assets
-# ensure [slothville]
+ensure [slothville]
 
 
 ## Permissions ##

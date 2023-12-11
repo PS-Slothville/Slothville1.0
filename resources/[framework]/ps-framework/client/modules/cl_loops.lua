@@ -1,4 +1,4 @@
-Register player coordinates with the server.
+-- Register player coordinates with the server.
 CreateThread(function()
     while true do
         Wait(2500)
