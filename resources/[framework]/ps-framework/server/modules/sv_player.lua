@@ -42,6 +42,7 @@ InternalPlayer.CreatePlayer = function(src, dbdata) -- no work in InternalPlayer
     if not self.metadata.hunger then self.metadata.hunger = 100 end
     if not self.metadata.stress then self.metadata.stress = 0 end
     if not self.metadata.health then self.metadata.health = 100 end
+    if not self.metadata.armour then self.metadata.armour = 100 end
     if not self.metadata.stamina then self.metadata.stamina = 100 end
 
     self.position = dbdata.position or InternalConfig.Player.DefaultPosition

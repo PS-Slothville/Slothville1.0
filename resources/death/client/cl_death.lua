@@ -5,6 +5,10 @@
 local isDead = false
 local canRespawn = false
 
+exports("IsDead", function()
+    return isDead
+end)
+
 local HeldTime = 0
 
 local DamageTaken = {

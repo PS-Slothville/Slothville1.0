@@ -463,7 +463,8 @@ RegisterNetEvent("ps-multi:CharacterSelected", function(playerdata, newplayer)
         DoScreenFadeIn(500)
     else
         -- create character then open spawn menu
-        TriggerEvent("ps-appearance:client:newPlayer")
+        -- TriggerEvent("ps-appearance:client:newPlayer")
+        -- TriggerEvent("fivem-appearance:client:CreateFirstCharacter")
     end
 end)
 
