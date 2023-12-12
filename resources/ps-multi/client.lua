@@ -167,11 +167,229 @@ RegisterNetEvent("ps-multi:CharacterDeleted", function()
     TriggerServerEvent("ps-framework:LoadCharacters")
 end)
 
+RegisterNetEvent("ps-multi:SelectedChar", function(data)
+    print(json.encode(data, {indent=true}))
+    if CharacterData[Camera.SelectedChar] then
+        DoScreenFadeOut(250)
+        Wait(300)
+        Camera.DestroyCamera()
+        Peds.DestroyPeds()
+        TriggerServerEvent("ps-multi:SelectCharacter", CharacterData[Camera.SelectedChar].cid)
+        Camera.CamActive = false
+        Camera.Cam = nil
+        Camera.SelectedChar = 1
+        Camera.PointingAtChar = 0
+    else
+        SendNUIMessage({ action = "OPEN" })
+        SetNuiFocus(true, true)
+    end
+end)
+
+local reopenMenu = false
+local menuOpen = false
+local MenuData = {}
+
+-- RegisterNetEvent("ps-ui:menuClosed", function()
+--     print(reopenMenu)
+--     if reopenMenu and not menuOpen then
+--         Wait(5000)
+--         print(json.encode(MenuData))
+--         exports['ps-ui']:CreateMenu(MenuData)
+--         -- menuOpen = true
+--     end
+-- end)
+
+RegisterCommand("multi-ui",function()
+    MenuData = {
+        {
+            header = "New Character",
+            text = "Create a new character",
+            icon = "fa-solid fa-circle",
+            event = "ps-multi:SelectedChar",
+            args = {
+                slot = 1,
+            },
+            server = false,
+            subMenu = nil
+            -- subMenu =  {
+            --     {
+            --         header= 'Submenu1',
+            --         icon= 'fa-solid fa-circle-info',
+            --         color= '#02f1b5',
+            --         event = "ps-multi:SelectedChar",
+            --         args = {
+            --             slot = 1,
+            --         },
+            --     },
+
+            -- },
+        },
+        {
+            header = "Jays Character",
+            text = "Select",
+            icon = "fa-solid fa-circle",
+            -- event = "ps-multi:SelectedChar",
+            -- args = {
+            --     slot = 2,
+            -- },
+            server = false,
+            -- subMenu = nil
+            subMenu =  {
+                {
+                    header= 'Spawn',
+                    icon= 'fa-solid fa-plane',
+                    color= '#02f1b5',
+                    event = "ps-multi:SelectedChar",
+                    args = {
+                        slot = 2,
+                    },
+                },
+                {
+                    header= 'Delete',
+                    icon= 'fa-solid fa-trash',
+                    color= 'red',
+                    event = "ps-multi:DeleteCharacterMenu",
+                    args = {
+                        slot = 2,
+                    },
+                },
+
+            },
+        },
+        {
+            header = "New Character",
+            text = "Create a new character",
+            icon = "fa-solid fa-circle",
+            event = "ps-multi:SelectedChar",
+            args = {
+                slot = 3,
+            },
+            server = false,
+            subMenu = nil
+        },
+        {
+            header = "New Character",
+            text = "Create a new character",
+            icon = "fa-solid fa-circle",
+            event = "ps-multi:SelectedChar",
+            args = {
+                slot = 4,
+            },
+            server = false,
+            subMenu = nil
+        },
+    }
+    print("open ne")
+    exports['ps-ui']:CreateMenu(MenuData)
+
+end)
+
 RegisterNetEvent("ps-multi:LoadCharacters", function(chardata)
-    print("test")
+  
+    MenuData = {
+        {
+            header = "New Character",
+            text = "Create a new character",
+            icon = "fa-solid fa-circle",
+            event = "ps-multi:SelectedChar",
+            args = {
+                slot = 1,
+            },
+            server = false,
+            subMenu = nil
+            -- subMenu =  {
+            --     {
+            --         header= 'Submenu1',
+            --         icon= 'fa-solid fa-circle-info',
+            --         color= '#02f1b5',
+            --         event = "ps-multi:SelectedChar",
+            --         args = {
+            --             slot = 1,
+            --         },
+            --     },
+
+            -- },
+        },
+        {
+            header = "Jays Character",
+            text = "Select",
+            icon = "fa-solid fa-circle",
+            -- event = "ps-multi:SelectedChar",
+            -- args = {
+            --     slot = 2,
+            -- },
+            server = false,
+            -- subMenu = nil
+            subMenu =  {
+                {
+                    header= 'Spawn',
+                    icon= 'fa-solid fa-plane',
+                    color= '#02f1b5',
+                    event = "ps-multi:SelectedChar",
+                    args = {
+                        slot = 2,
+                    },
+                },
+                {
+                    header= 'Delete',
+                    icon= 'fa-solid fa-trash',
+                    color= 'red',
+                    event = "ps-multi:DeleteCharacterMenu",
+                    args = {
+                        slot = 2,
+                    },
+                },
+
+            },
+        },
+        {
+            header = "New Character",
+            text = "Create a new character",
+            icon = "fa-solid fa-circle",
+            event = "ps-multi:SelectedChar",
+            args = {
+                slot = 3,
+            },
+            server = false,
+            subMenu = nil
+        },
+        {
+            header = "New Character",
+            text = "Create a new character",
+            icon = "fa-solid fa-circle",
+            event = "ps-multi:SelectedChar",
+            args = {
+                slot = 4,
+            },
+            server = false,
+            subMenu = nil
+        },
+    }
+    
+    for _,data in ipairs(chardata) do
+        print(data.slot)
+        if not MenuData[data.slot] then
+    
+        end
+        
+
+        -- MenuData[data.slot].cid = data.cid
+        -- MenuData[data.slot].slot = data.slot
+        -- MenuData[data.slot].charinfo = json.decode(data.charinfo)
+        -- MenuData[data.slot].skin = json.decode(data.skin)
+    end
+    -- print("nom")
+    exports['ps-ui']:CreateMenu(MenuData)
+    reopenMenu = true
+    Peds.SpawnPed(1)
+end)
+
+RegisterNetEvent("ps-multi:LoadCharacters", function(chardata)
+    -- print("test")
     CharacterData = {}
 
     for _,data in ipairs(chardata) do
+        -- print(data.slot)
         if not CharacterData[data.slot] then
             CharacterData[data.slot] = {}
         end
@@ -180,7 +398,7 @@ RegisterNetEvent("ps-multi:LoadCharacters", function(chardata)
         CharacterData[data.slot].charinfo = json.decode(data.charinfo)
         CharacterData[data.slot].skin = json.decode(data.skin)
     end
-    print("test1")
+    -- print("test1")
 
     local PositionsTaken = 0
 
@@ -188,33 +406,33 @@ RegisterNetEvent("ps-multi:LoadCharacters", function(chardata)
     FreezeEntityPosition(PlayerPedId(), true)
     SetEntityAlpha(PlayerPedId(), 0.0, true)
 
-    for i = 1, 4 do
-        if CharacterData[i] then
-            -- Load Chars
-            local ped = Peds.SpawnPed(tonumber(CharacterData[i].slot), tonumber(CharacterData[i].charinfo.gender))
-            -- exports['ps-appearance']:loadSkin(ped, CharacterData[i].skin)
-            PositionsTaken = PositionsTaken + 1
-            Wait(10)
-        end
-    end
-    print("test2")
+    -- for i = 1, 4 do
+    --     if CharacterData[i] then
+    --         -- Load Chars
+    --         local ped = Peds.SpawnPed(tonumber(CharacterData[i].slot), tonumber(CharacterData[i].charinfo.gender))
+    --         -- exports['ps-appearance']:loadSkin(ped, CharacterData[i].skin)
+    --         PositionsTaken = PositionsTaken + 1
+    --         Wait(10)
+    --     end
+    -- end
+    -- print("test2")
 
-    if PositionsTaken < 4 then
-        print("test5")
-        for i = 1, 4 do
-            print("test6")
-            if not CharacterData[i] then
-                print("test7")
-                -- Unused Slots | Default Ped
-                local ped = Peds.SpawnPed(i)
-                print("aa")
-            end
-        end
-    end
-    print("test3")
-
+    -- if PositionsTaken < 4 then
+    --     -- print("test5")
+    --     for i = 1, 4 do
+    --         -- print("test6")
+    --         if not CharacterData[i] then
+    --             -- print("test7")
+    --             -- Unused Slots | Default Ped
+    --             local ped = Peds.SpawnPed(i)
+    --             -- print("aa")
+    --         end
+    --     end
+    -- end
+    -- print("test3")
+-- 
     Camera.SetUpCamera()
-    print("test4")
+    -- print("test4")
 
     Wait(100)
     DoScreenFadeIn(500)

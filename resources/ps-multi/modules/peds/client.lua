@@ -7,27 +7,27 @@ Peds = {}
 Peds.PedList = {}
 
 Peds.SpawnPed = function(position, gender)
-    print("SpawnPed 1")
+    -- print("SpawnPed 1")
     local Model
     if tonumber(gender) == 0 then
         Model = 'mp_f_freemode_01'
     else
         Model = 'mp_m_freemode_01'
     end
-    print("SpawnPed 2")
+    -- print("SpawnPed 2")
     local coords = Config.CharLocations[CurrentScene][position]
     RequestModel(GetHashKey(Model))
     while not HasModelLoaded(GetHashKey(Model)) do
         Wait(1)
     end
-    print("SpawnPed 3")
+    -- print("SpawnPed 3")
     -- local ped = CreatePed(GetHashKey(Model), coords.x, coords.y, coords.z - 1.0, coords.w, false, true)
     local ped = CreatePed(2, GetHashKey(Model), coords.x, coords.y, coords.z - 1.0, coords.w, false, true)
-    print("SpawnPed 4", ped)
+    -- print("SpawnPed 4", ped)
     while not DoesEntityExist(ped) do
         Wait(1)
     end
-    print("SpawnPed 5")
+    -- print("SpawnPed 5")
     SetEntityAsMissionEntity(ped, true, true)
     NetworkSetEntityInvisibleToNetwork(ped, true)
     FreezeEntityPosition(ped, true)
@@ -37,7 +37,7 @@ Peds.SpawnPed = function(position, gender)
     SetEntityCanBeDamagedByRelationshipGroup(ped, false, GetHashKey("PLAYER"))
     SetModelAsNoLongerNeeded(GetHashKey(Model))
     Peds.PedList[position] = ped
-    print("yolo")
+    -- print("yolo")
     return Peds.PedList[position]
 end
 
